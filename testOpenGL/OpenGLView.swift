@@ -17,16 +17,21 @@ class OpenGLView: GLKView,GLKViewDelegate {
     private var vertexBufferID:GLuint = 0
     private var indexBufferID:GLuint = 0
     private var vertics = [
-        Vertex(x: 1, y: -1, z: 0),
+        Vertex(x: 0.3, y: -0.3, z: 0),
         Vertex(x: 1, y: 1, z: 0),
+        Vertex(x: -1, y: 1, z: 0),
         Vertex(x: -1, y: -1, z: 0)
     ]
     
-    private let indexs:[GLubyte] = [
+    private var indexs:[GLubyte] = [
         0,1,2,
         2,3,0
     ]
-    let indexCOunt = MemoryLayout<GLubyte>.size / MemoryLayout<Vertex>.size
+    private let vertexPosion:GLuint = 0
+    private let elemtentPosion:GLuint = 1
+    private lazy var indexCount = {
+        MemoryLayout.size(ofValue: indexs) /  MemoryLayout.size(ofValue: indexs[0])
+    }()
     override init(frame: CGRect) {
         super.init(frame: frame)
         context = EAGLContext.init(api: EAGLRenderingAPI.openGLES2)!
@@ -47,21 +52,27 @@ class OpenGLView: GLKView,GLKViewDelegate {
         glClear(GLbitfield(GL_COLOR_BUFFER_BIT))
      
         
-        glEnableVertexAttribArray(GLuint(0))
-        glVertexAttribPointer(GLuint(0), 3, GLenum(GL_FLOAT), GLboolean(GL_FALSE),GLsizei(MemoryLayout<Vertex>.size),nil)
-//        glBindBuffer(GLenum(GL_ARRAY_BUFFER), vertexBufferID)
-//        glDrawArrays(GLenum(GL_TRIANGLES), 0, 3)
-        glDrawElements(GLenum(GL_TRIANGLES), GLsizei(indexCOunt), GLenum(GL_UNSIGNED_BYTE), nil)
+        glEnableVertexAttribArray(vertexPosion)
+        glVertexAttribPointer(vertexPosion, 2, GLenum(GL_FLOAT), GLboolean(GL_FALSE),GLsizei(MemoryLayout<Vertex>.stride),nil)
         
-        glDisableVertexAttribArray(GLuint(0))
+        glEnableVertexAttribArray(elemtentPosion)
+        glVertexAttribPointer(elemtentPosion, 1, GLenum(GL_FLOAT), GLboolean(GL_FALSE),GLsizei(MemoryLayout<Vertex>.size),UnsafeRawPointer(bitPattern: 3*MemoryLayout<GLfloat>.stride))
+        glBindBuffer(GLenum(GL_ARRAY_BUFFER), vertexBufferID)
+        glBindBuffer(GLenum(GL_ELEMENT_ARRAY_BUFFER), indexBufferID)
+//        glDrawArrays(GLenum(GL_TRIANGLES), 0, 3)
+        glDrawElements(GLenum(GL_TRIANGLES), GLsizei(indexCount), GLenum(GL_UNSIGNED_BYTE), &indexs)
+        
+        glDisableVertexAttribArray(vertexPosion)
     }
     private func loadTriangle(){
-        glGenBuffers(GLsizei(1), &indexBufferID)
-        glBindBuffer(GLenum(GL_ELEMENT_ARRAY_BUFFER), GLuint(indexCOunt))
-        glBufferData(GLenum(GL_ELEMENT_ARRAY_BUFFER), MemoryLayout<GLubyte>.size, indexs, GLenum(GL_STATIC_DRAW))
+       
         
         glGenBuffers(GLsizei(1), &vertexBufferID)
         glBindBuffer(GLenum(GL_ARRAY_BUFFER), vertexBufferID)
         glBufferData(GLenum(GL_ARRAY_BUFFER), vertics.count*MemoryLayout<Vertex>.size, vertics, GLenum(GL_STATIC_DRAW))
+        
+        glGenBuffers(GLsizei(1), &indexBufferID)
+        glBindBuffer(GLenum(GL_ELEMENT_ARRAY_BUFFER), GLuint(indexCount))
+        glBufferData(GLenum(GL_ELEMENT_ARRAY_BUFFER), MemoryLayout.size(ofValue: indexs), indexs, GLenum(GL_STATIC_DRAW))
     }
 }
