@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		52156FCA2A287CDD005470F9 /* VertexBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52156FC92A287CDD005470F9 /* VertexBuffer.swift */; };
+		52156FCC2A288035005470F9 /* IndexBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52156FCB2A288035005470F9 /* IndexBuffer.swift */; };
+		52156FCE2A28B0D3005470F9 /* VertextArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52156FCD2A28B0D3005470F9 /* VertextArray.swift */; };
+		52156FD02A28B905005470F9 /* VertexBufferLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52156FCF2A28B905005470F9 /* VertexBufferLayout.swift */; };
 		5217F5202A1F3EFC008BF3DA /* testOpenGLApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5217F51F2A1F3EFC008BF3DA /* testOpenGLApp.swift */; };
 		5217F5222A1F3EFC008BF3DA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5217F5212A1F3EFC008BF3DA /* ContentView.swift */; };
 		5217F5242A1F3EFE008BF3DA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5217F5232A1F3EFE008BF3DA /* Assets.xcassets */; };
@@ -16,9 +20,18 @@
 		5217F5332A1F575D008BF3DA /* fragment_shader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 5217F5322A1F575D008BF3DA /* fragment_shader.glsl */; };
 		5217F5372A1F587E008BF3DA /* ShaderUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5217F5362A1F587E008BF3DA /* ShaderUtility.swift */; };
 		5217F5392A1F58EC008BF3DA /* Vertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5217F5382A1F58EC008BF3DA /* Vertex.swift */; };
+		52242E3C2A26390B00AD34E3 /* OpenGLView1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52242E3B2A26390B00AD34E3 /* OpenGLView1.swift */; };
+		527FA2552A29D094003D4FD9 /* Shader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527FA2542A29D094003D4FD9 /* Shader.swift */; };
+		527FA2572A29F0D2003D4FD9 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527FA2562A29F0D2003D4FD9 /* Renderer.swift */; };
+		527FA2592A2A0FC1003D4FD9 /* Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527FA2582A2A0FC1003D4FD9 /* Texture.swift */; };
+		527FA25B2A2A17BA003D4FD9 /* mck.png in Resources */ = {isa = PBXBuildFile; fileRef = 527FA25A2A2A17BA003D4FD9 /* mck.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		52156FC92A287CDD005470F9 /* VertexBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VertexBuffer.swift; sourceTree = "<group>"; };
+		52156FCB2A288035005470F9 /* IndexBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexBuffer.swift; sourceTree = "<group>"; };
+		52156FCD2A28B0D3005470F9 /* VertextArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VertextArray.swift; sourceTree = "<group>"; };
+		52156FCF2A28B905005470F9 /* VertexBufferLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VertexBufferLayout.swift; sourceTree = "<group>"; };
 		5217F51C2A1F3EFC008BF3DA /* testOpenGL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = testOpenGL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5217F51F2A1F3EFC008BF3DA /* testOpenGLApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testOpenGLApp.swift; sourceTree = "<group>"; };
 		5217F5212A1F3EFC008BF3DA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -29,6 +42,11 @@
 		5217F5322A1F575D008BF3DA /* fragment_shader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = fragment_shader.glsl; sourceTree = "<group>"; };
 		5217F5362A1F587E008BF3DA /* ShaderUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderUtility.swift; sourceTree = "<group>"; };
 		5217F5382A1F58EC008BF3DA /* Vertex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vertex.swift; sourceTree = "<group>"; };
+		52242E3B2A26390B00AD34E3 /* OpenGLView1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenGLView1.swift; sourceTree = "<group>"; };
+		527FA2542A29D094003D4FD9 /* Shader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shader.swift; sourceTree = "<group>"; };
+		527FA2562A29F0D2003D4FD9 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
+		527FA2582A2A0FC1003D4FD9 /* Texture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Texture.swift; sourceTree = "<group>"; };
+		527FA25A2A2A17BA003D4FD9 /* mck.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mck.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +60,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		52156FC82A287CC6005470F9 /* core */ = {
+			isa = PBXGroup;
+			children = (
+				52156FC92A287CDD005470F9 /* VertexBuffer.swift */,
+				52156FCB2A288035005470F9 /* IndexBuffer.swift */,
+				52156FCD2A28B0D3005470F9 /* VertextArray.swift */,
+				52156FCF2A28B905005470F9 /* VertexBufferLayout.swift */,
+				527FA2542A29D094003D4FD9 /* Shader.swift */,
+				527FA2562A29F0D2003D4FD9 /* Renderer.swift */,
+				527FA2582A2A0FC1003D4FD9 /* Texture.swift */,
+			);
+			path = core;
+			sourceTree = "<group>";
+		};
 		5217F5132A1F3EFC008BF3DA = {
 			isa = PBXGroup;
 			children = (
@@ -61,6 +93,7 @@
 		5217F51E2A1F3EFC008BF3DA /* testOpenGL */ = {
 			isa = PBXGroup;
 			children = (
+				527FA25A2A2A17BA003D4FD9 /* mck.png */,
 				5217F5342A1F581F008BF3DA /* OpenGL */,
 				5217F51F2A1F3EFC008BF3DA /* testOpenGLApp.swift */,
 				5217F5212A1F3EFC008BF3DA /* ContentView.swift */,
@@ -90,8 +123,10 @@
 		5217F5342A1F581F008BF3DA /* OpenGL */ = {
 			isa = PBXGroup;
 			children = (
+				52156FC82A287CC6005470F9 /* core */,
 				5217F5352A1F585C008BF3DA /* utility */,
 				5217F52D2A1F3F88008BF3DA /* OpenGLView.swift */,
+				52242E3B2A26390B00AD34E3 /* OpenGLView1.swift */,
 				5217F52F2A1F56E9008BF3DA /* shaders */,
 				5217F5382A1F58EC008BF3DA /* Vertex.swift */,
 			);
@@ -164,6 +199,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				527FA25B2A2A17BA003D4FD9 /* mck.png in Resources */,
 				5217F5272A1F3EFE008BF3DA /* Preview Assets.xcassets in Resources */,
 				5217F5242A1F3EFE008BF3DA /* Assets.xcassets in Resources */,
 				5217F5332A1F575D008BF3DA /* fragment_shader.glsl in Resources */,
@@ -178,10 +214,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				527FA2552A29D094003D4FD9 /* Shader.swift in Sources */,
 				5217F5222A1F3EFC008BF3DA /* ContentView.swift in Sources */,
 				5217F5372A1F587E008BF3DA /* ShaderUtility.swift in Sources */,
+				52156FCA2A287CDD005470F9 /* VertexBuffer.swift in Sources */,
+				527FA2572A29F0D2003D4FD9 /* Renderer.swift in Sources */,
+				52156FD02A28B905005470F9 /* VertexBufferLayout.swift in Sources */,
+				52156FCE2A28B0D3005470F9 /* VertextArray.swift in Sources */,
 				5217F52E2A1F3F88008BF3DA /* OpenGLView.swift in Sources */,
+				52242E3C2A26390B00AD34E3 /* OpenGLView1.swift in Sources */,
 				5217F5392A1F58EC008BF3DA /* Vertex.swift in Sources */,
+				52156FCC2A288035005470F9 /* IndexBuffer.swift in Sources */,
+				527FA2592A2A0FC1003D4FD9 /* Texture.swift in Sources */,
 				5217F5202A1F3EFC008BF3DA /* testOpenGLApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

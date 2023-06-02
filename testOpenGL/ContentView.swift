@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    let glView =  OpenGLView(frame: .zero)
+    let glView =  OpenGLView1()
     var body: some View {
         VStack {
             Image(systemName: "globe")
@@ -26,12 +26,12 @@ struct ContentView: View {
     }
 }
 
-struct KitView:UIViewRepresentable {
-    let v:OpenGLView
-    func makeUIView(context: Context) -> OpenGLView {
-       v
+struct KitView:UIViewControllerRepresentable{
+    let v:OpenGLView1
+    func makeUIViewController(context: Context) -> OpenGLView1 {
+        v
     }
-    func updateUIView(_ uiView: OpenGLView, context: Context) {
-     
+    func updateUIViewController(_ uiViewController: OpenGLView1, context: Context) {
+        
     }
 }
