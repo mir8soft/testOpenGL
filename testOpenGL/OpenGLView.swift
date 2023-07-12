@@ -6,6 +6,7 @@
 //
 
 import GLKit
+import OpenGLES
 
 protocol UIConnectionDelegate{
     func onAppear()
@@ -17,10 +18,10 @@ class OpenGLView: GLKView,GLKViewDelegate {
     private var vertexBufferID:GLuint = 0
     private var indexBufferID:GLuint = 0
     private var vertics = [
-        Vertex(x: 0.3, y: -0.3, z: 0),
-        Vertex(x: 1, y: 1, z: 0),
-        Vertex(x: -1, y: 1, z: 0),
-        Vertex(x: -1, y: -1, z: 0)
+        Vertex1(x: 0.3, y: -0.3, z: 0),
+        Vertex1(x: 1, y: 1, z: 0),
+        Vertex1(x: -1, y: 1, z: 0),
+        Vertex1(x: -1, y: -1, z: 0)
     ]
     
     private var indexs:[GLubyte] = [
@@ -42,10 +43,10 @@ class OpenGLView: GLKView,GLKViewDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     func onAppear() {
-        shaderUtil = .init(v_shaderFile: "vertex_shader.glsl", f_shaderFile: "fragment_shader.glsl")
-        loadTriangle()
+//        shaderUtil = .init(v_shaderFile: "vertex_shader.glsl", f_shaderFile: "fragment_shader.glsl")
+//        loadTriangle()
         
-        shaderUtil.prepareToDraw()
+        shaderUtil.bindProgram()
     }
     func glkView(_ view: GLKView, drawIn rect: CGRect) {
         glClearColor(0, 1, 0, 1)

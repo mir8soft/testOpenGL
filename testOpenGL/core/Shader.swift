@@ -24,7 +24,6 @@ class Shader {
         let ss = try! NSString(contentsOf: shaderPath, encoding: String.Encoding.utf8.rawValue)
         var shaderStringLegth:GLint = GLint(ss.length)
         var cString = ss.cString(using: String.Encoding.utf8.rawValue)
-        
         glShaderSource(shaderId, GLsizei(1), &cString, &shaderStringLegth)
         glCompileShader(shaderId)
         

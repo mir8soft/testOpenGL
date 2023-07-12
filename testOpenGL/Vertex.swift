@@ -8,7 +8,7 @@
 import Foundation
 import OpenGLES
 
-struct Vertex {
+struct Vertex1 {
     var x:GLfloat
     var y:GLfloat
     var z:GLfloat

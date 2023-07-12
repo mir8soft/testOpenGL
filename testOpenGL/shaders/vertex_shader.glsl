@@ -1,12 +1,17 @@
-#version 300 es
-//attribute vec4 m_position;
+//precision lowp float;
 
-layout(location = 0) in vec4 position;
-layout(location = 1) in vec2 texCoord;
+uniform highp mat4 u_ModelViewMatrix;
+uniform highp mat4 u_ProjectionMatrix;
 
-out vec2 v_texCoord;
+attribute vec4 a_Position;
+attribute vec4 a_Color;
+attribute vec2 a_TexCoord;
 
-void main(void){
-    gl_Position = position;
-    v_texCoord = texCoord;
+varying lowp vec4 frag_Color;
+varying lowp vec2 frag_TexCoord;
+
+void main(void) {
+    frag_Color = a_Color;
+    frag_TexCoord = a_TexCoord;
+    gl_Position = u_ProjectionMatrix * u_ModelViewMatrix * a_Position;
 }

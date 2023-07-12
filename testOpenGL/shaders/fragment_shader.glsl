@@ -1,13 +1,9 @@
-#version 300 es
+//precision lowp float;
+uniform sampler2D u_Texture;
 
-layout(location = 0) out lowp vec4 color;
+varying lowp vec4 frag_Color;
+varying lowp vec2 frag_TexCoord;
 
-in lowp vec2 v_texCoord;
-
-uniform lowp vec4 u_color;
-uniform sampler2D u_texture;
-
-void main(void){
-   lowp vec4 textColor = texture(u_texture,v_texCoord);
-    color = textColor;
+void main(void) {
+    gl_FragColor = frag_Color * texture2D(u_Texture, frag_TexCoord);
 }

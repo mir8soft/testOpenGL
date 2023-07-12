@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    let glView =  OpenGLView1()
+    let glView =  OpenGLView2()
     var body: some View {
         VStack {
             Image(systemName: "globe")
@@ -18,20 +18,20 @@ struct ContentView: View {
             KitView(v:glView)
         }
         .padding()
-        .onAppear{
-            DispatchQueue.main.async {
-                glView.onAppear()
-            }
-        }
+//        .onAppear{
+//            DispatchQueue.main.async {
+//                glView.onAppear()
+//            }
+//        }
     }
 }
 
 struct KitView:UIViewControllerRepresentable{
-    let v:OpenGLView1
-    func makeUIViewController(context: Context) -> OpenGLView1 {
+    let v:OpenGLView2
+    func makeUIViewController(context: Context) -> OpenGLView2 {
         v
     }
-    func updateUIViewController(_ uiViewController: OpenGLView1, context: Context) {
+    func updateUIViewController(_ uiViewController: OpenGLView2, context: Context) {
         
     }
 }

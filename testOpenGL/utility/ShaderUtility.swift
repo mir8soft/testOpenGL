@@ -5,63 +5,79 @@
 //  Created by MacBook Pro on 25/05/2023.
 //
 
-import OpenGLES
+//import OpenGLES
+import GLKit
 
 class ShaderUtility {
-    var programId = GLuint(0)
-    init(v_shaderFile:String,f_shaderFile:String) {
-        self.compile(v_shader: v_shaderFile, f_shader: f_shaderFile)
-    }
-    func prepareToDraw() {
+    var texture:UInt32 = .init(0)
+    var modelViewMatrix:GLKMatrix4 = GLKMatrix4Identity
+    var pjectionMatrix:GLKMatrix4 = GLKMatrix4Identity
+    private var modelMatrixUniformLocation = GLint(0)
+    private var projectionMatrixUniformLocation = GLint(0)
+    private var textureUnidorm = GLint(0)
+    private var programId = GLuint(0)
+    var attributes:[String:UInt32] = [:]
+    func bindProgram() {
         glUseProgram(programId)
-    }
-    private func compile(v_shader:String,f_shader:String) {
-        let vertexShaderID = self.compileShader(shader: v_shader, shader_type: GLenum(GL_VERTEX_SHADER))
-        let fragmentShaderID = self.compileShader(shader: f_shader, shader_type: GLenum(GL_FRAGMENT_SHADER))
-        self.programId = glCreateProgram()
-        glAttachShader(self.programId, vertexShaderID)
-        glAttachShader(self.programId, fragmentShaderID)
+        glUniformMatrix4fv(modelMatrixUniformLocation, GLsizei(1), GLboolean(GL_FALSE), modelViewMatrix.array)
         
-        glBindAttribLocation(programId, GLuint(0), "m_position")
+        glUniformMatrix4fv(projectionMatrixUniformLocation, GLsizei(1), GLboolean(GL_FALSE), pjectionMatrix.array)
+        
+        glActiveTexture(GLenum(GL_TEXTURE1))
+        glBindTexture(GLenum(GL_TEXTURE_2D), self.texture)
+        glUniform1i(textureUnidorm, 1)
+    }
+    init(v_shaderFile:URL,f_shaderFile:URL,attributes attrbs:[String] = []) {
+        let vs:GLuint = createShader(shaderType:GL_VERTEX_SHADER,shaderSourcePath: v_shaderFile)
+        let fs:GLuint = createShader(shaderType:GL_FRAGMENT_SHADER,shaderSourcePath:f_shaderFile)
+        self.programId = glCreateProgram()
+        glAttachShader(self.programId, GLuint(vs))
+        glAttachShader(self.programId, GLuint(fs))
+        
+        attrbs.enumerated().forEach({ i,name in
+            glBindAttribLocation(programId, GLuint(i), name)
+            attributes[name] = UInt32(i)
+        })
+        
         glLinkProgram(programId)
         
-        var linkStatus = GLint(0)
-        glGetProgramiv(programId, GLenum(GL_LINK_STATUS), &linkStatus)
-        if linkStatus == GL_FALSE{
-            var infoLenght = GLsizei(0)
-            let bufferLenght = GLsizei(1024)
-            glGetProgramiv(programId, GLenum(GL_INFO_LOG_LENGTH), &infoLenght)
+        modelMatrixUniformLocation = glGetUniformLocation(programId, "u_ModelViewMatrix")
+        projectionMatrixUniformLocation = glGetUniformLocation(programId, "u_ProjectionMatrix")
+        textureUnidorm = glGetUniformLocation(programId, "u_Texture")
+        var isLinked:GLint = 0
+        glGetProgramiv(programId, GLenum(GL_LINK_STATUS), &isLinked)
+        if isLinked == GL_FALSE{
+            var maxLeght:GLint = 0
+            glGetProgramiv(programId, GLenum(GL_INFO_LOG_LENGTH), &maxLeght)
             
-            var info : [GLchar] = Array(repeating: GLchar(0), count: Int(bufferLenght))
-            var actualLength = GLsizei(0)
-            glGetProgramInfoLog(programId, bufferLenght, &actualLength, &info)
-            print("Program compile error = ",String(validatingUTF8: info) ?? "")
-            exit(1)
+            let str = UnsafeMutablePointer<CChar>.allocate(capacity: .init(maxLeght))
+            glGetProgramInfoLog(programId, GLsizei(maxLeght), &maxLeght, str)
+            print(String(cString: str))
+            str.deinitialize(count: Int(maxLeght)).deallocate()
         }
+        glDeleteShader(vs)
+        glDeleteShader(fs)
+    }
+    private func createShader(shaderType type:Int32,shaderSourcePath path:URL)->GLuint{
+        let shaderId = glCreateShader(GLenum(type))
+        let shader = try! NSString(contentsOf: path, encoding: String.Encoding.utf8.rawValue)
+        var cs = shader.cString(using: String.Encoding.utf8.rawValue)
+        var len = GLint(shader.length)
         
-    }
-    private func compileShader(shader:String,shader_type:GLenum)->GLuint{
-        let path = Bundle.main.url(forResource: shader, withExtension: nil)!
-        let ss = try! NSString(contentsOf: path, encoding: String.Encoding.utf8.rawValue)
-        let shadeHandle = glCreateShader(shader_type)
-        var shaderStringLegth:GLint = GLint(ss.length)
-        var cString = ss.cString(using: String.Encoding.utf8.rawValue)
-        glShaderSource(shadeHandle, GLsizei(1), &cString, &shaderStringLegth)
-        glCompileShader(shadeHandle)
-        var compileStatus = GLint(0)
-        glGetShaderiv(shadeHandle, GLenum(GL_COMPILE_STATUS), &compileStatus)
-        if compileStatus == GL_FALSE{
-            var infoLenghtSize = GLsizei(0)
-            let bufferLength = GLsizei(1024)
-            glGetShaderiv(shadeHandle, GLenum(GL_INFO_LOG_LENGTH), &infoLenghtSize)
-            var info:[GLchar] = Array(repeating: GLchar(0), count: Int(bufferLength))
-            var actualLength = GLsizei(0)
-            glGetShaderInfoLog(shadeHandle, bufferLength, &actualLength,&info)
-            print("error in :\n \(shader)\n Error = ",String(validatingUTF8: info) ?? "")
-            exit(1)
+        glShaderSource(shaderId, GLsizei(1),&cs, &len)
+        glCompileShader(shaderId)
+        
+        var status:GLint = 0
+        glGetShaderiv(shaderId, GLenum(GL_COMPILE_STATUS), &status)
+        if status == GL_FALSE{
+            var maxLenght:GLuint = 0
+            glGetShaderiv(shaderId, GLenum(GL_INFO_LOG_LENGTH), &maxLenght)
+            let str = UnsafeMutablePointer<CChar>.allocate(capacity: Int(maxLenght))
+            glGetShaderInfoLog(shaderId, GLsizei(512), nil, str)
+            print("Shader \(path.lastPathComponent) Error : ",String(cString: str))
+            str.deinitialize(count: Int(maxLenght)).deallocate()
+            return 0
         }
-        return shadeHandle
+        return shaderId
     }
-    
-    
 }
